@@ -41,10 +41,10 @@ class ByteInteger:
             elif current_eval == 3:
                 new_bits[index] = 1
 
-            try:
-                new_bits[index + 1] = carry
-            except IndexError:
-                pass
+        try:
+            new_bits[index + 1] = carry
+        except IndexError:
+            pass
 
         new_bits.reverse()
 
