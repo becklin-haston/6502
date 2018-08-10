@@ -46,11 +46,10 @@ class ByteInteger:
 
     def __add__(self, other):
 
-        if self.signed:
+        if self.signed or other.signed:
             raise ValueError
             # We'll probably need to modify the __add__ method to deal with signed integers.
             # That is to say, we will need to make this __add__ method work for 2's complement addition.
-
 
         new_bits = [0] * self.byte_length
         carry = 0
@@ -62,6 +61,7 @@ class ByteInteger:
 
             self_digit = self.bits[index]
             other_digit = other.bits[index]
+
             current_eval = carry + self_digit + other_digit
             if current_eval == 0:
                 new_bits[index] = 0
@@ -84,6 +84,7 @@ class ByteInteger:
         str_bits = [str(carry)] + str_bits
         new_int = int("".join(str_bits), 2)
         result = ByteInteger(new_int)
+
         return result
 
 
