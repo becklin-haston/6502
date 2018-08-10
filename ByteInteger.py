@@ -21,9 +21,7 @@ class ByteInteger:
 
     def __add__(self, other):
 
-        new_bits = [None] * 8
-        #self.bits.reverse()
-        #other.bits.reverse()
+        new_bits = [0] * 8
         carry = 0
 
         for index in range(-1, -(self.byte_length) - 1, -1):
@@ -47,13 +45,9 @@ class ByteInteger:
         except IndexError:
             pass
 
-        #new_bits.reverse()
-
         str_bits = [str(digit) if digit else "0" for digit in new_bits]
         str_bits = [str(carry)] + str_bits
         new_int = int("".join(str_bits), 2)
-        #self.bits.reverse()
-        #other.bits.reverse()
         result = ByteInteger(new_int)
         return result
 
