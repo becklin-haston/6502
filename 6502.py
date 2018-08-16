@@ -1,5 +1,4 @@
 from ByteInteger import ByteInteger
-from ArithmeticLogic import add
 
 
 class Sixty502:
@@ -46,16 +45,49 @@ class Sixty502:
 
         return register_status + flag_status + memory_status
 
-    def __change_register_value(self):
-        pass
+    def __update_flag_value(self, new_flag_values):
+
+        for key, value in new_flag_values.items():
+            self.flags[key] = value
+
+    def update_negative_flag(self, new_value):
+
+        self.__update_flag_value({"negative": new_value})
+
+    def update_zero_flag(self, new_value):
+
+        if new_value == 0:
+            self.__update_flag_value({"zero": True})
+        else:
+            self.__update_flag_value({"zero": False})
+
+    def update_carry_flag(self, new_value):
+
+        self.__update_flag_value({"carry": new_value})
+
+    def update_interrupt_disable_flag(self, new_value):
+
+        self.__update_flag_value({"interrupt_disable": new_value})
+
+    def update_decimal_flag(self, new_value):
+
+        self.__update_flag_value({"decimal": new_value})
+
+    def update_break_flag(self, new_value):
+
+        self.__update_flag_value({"break": new_value})
+
+    def update_overflow_flat(self, new_value):
+
+        self.__update_flag_value({"overflow": new_value})
 
     def __load(self, register, new_value):
 
         byte_int = ByteInteger(new_value)
         self.registers[register] = byte_int
-        # TODO write abstract flag setting method.
-        self.flags["negative"] = True if byte_int.signed else False
-        self.flags["zero"] = True if byte_int.value == 0 else False
+
+        self.update_negative_flag(byte_int.signed)
+        self.update_zero_flag(byte_int.dec_value)
 
     def load_accumulator(self, new_value):
 
@@ -90,8 +122,9 @@ class Sixty502:
 
     def __transfer(self, source, destination):
         self.registers[destination] = self.registers[source]
-        self.flags["negative"] = True if self.registers[destination].signed else False
-        self.flags["zero"] = True if self.registers[destination].value == 0 else False
+
+        self.update_negative_flag(self.registers[destination].signed)
+        self.update_zero_flag(self.registers[destination].dec_value)
 
     def transfer_a_to_x(self):
         self.__transfer("accumulator", "index_x")
@@ -108,5 +141,5 @@ class Sixty502:
 
 proc = Sixty502()
 
-a = ByteInteger(255)
-print(a)
+proc.load_accumulator(255)
+print(proc)

@@ -27,7 +27,6 @@ class ByteInteger:
 
             return -new_int if sign_bit else new_int
 
-
         self.dec_value = value
         self.hex_value = hex(value)[2:]
 
@@ -43,10 +42,9 @@ class ByteInteger:
 
         self.signed = True if self.bits[0] else False
 
-
     def __str__(self):
 
-        return "".join([f"{str(key)}: {str(value)}\n" for key, value in self.__dict__.items()])
+        return "ByteInteger " + ", ".join([f"{str(key)}: {str(value)}" for key, value in self.__dict__.items()])
 
 
 
