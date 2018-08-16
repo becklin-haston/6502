@@ -46,6 +46,9 @@ class Sixty502:
 
         return register_status + flag_status + memory_status
 
+    def __change_register_value(self):
+        pass
+
     def __load(self, register, new_value):
 
         byte_int = ByteInteger(new_value)
