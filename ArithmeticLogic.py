@@ -1,22 +1,20 @@
-from NewByteInteger import ByteInteger
 
+def add(first, second, bit_pattern=False):
 
-def add(first, second):
+    if not bit_pattern:
+        first = first.bits
+        second = second.bits
 
-    new_bits = [0] * 8
-    carry = 0
-
-    # Iterating "backwards" because index 0 of a list contains the most significant bit of an integer.
-    # We want to iterate, starting from the least significant bit of an integer at index -1
-    # (like in standard hand-done arithmetic)
     START_INDEX = -1
     STOP_INDEX = -9
     LOOP_STEP = -1
 
+    new_bits = [0] * 8
+    carry = 0
     for index in range(START_INDEX, STOP_INDEX, LOOP_STEP):
 
-        self_digit = first.bits[index]
-        other_digit = second.bits[index]
+        self_digit = first[index]
+        other_digit = second[index]
 
         current_eval = carry + self_digit + other_digit
         if current_eval == 0:
@@ -36,9 +34,12 @@ def add(first, second):
     except IndexError:
         pass
 
-    str_bits = [str(digit) if digit else "0" for digit in new_bits]
-    new_int = int("".join(str_bits), 2)
-    result = ByteInteger(new_int)
+    int_bits = [int(digit) for digit in new_bits]
+    if bit_pattern:
+        return int_bits
+    else:
+        str_bits = [str(digit) if digit else "0" for digit in new_bits]
+        new_int = int("".join(str_bits), 2)
+        return new_int
 
-    return result
 

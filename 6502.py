@@ -1,4 +1,6 @@
 from ByteInteger import ByteInteger
+from ArithmeticLogic import add
+
 
 class Sixty502:
 
@@ -24,6 +26,8 @@ class Sixty502:
 
         self.memory = [0] * 256
 
+        self.stack = [0] * 256
+
     def __repr__(self):
 
         register_status = "\nregister status: \n"
@@ -44,10 +48,9 @@ class Sixty502:
 
     def __load(self, register, new_value):
 
-
         byte_int = ByteInteger(new_value)
         self.registers[register] = byte_int
-        self.flags["negative"] = True if byte_int.value < 0 else False
+        self.flags["negative"] = True if byte_int.signed else False
         self.flags["zero"] = True if byte_int.value == 0 else False
 
     def load_accumulator(self, new_value):
@@ -83,6 +86,8 @@ class Sixty502:
 
     def __transfer(self, source, destination):
         self.registers[destination] = self.registers[source]
+        self.flags["negative"] = True if self.registers[destination].signed else False
+        self.flags["zero"] = True if self.registers[destination].value == 0 else False
 
     def transfer_a_to_x(self):
         self.__transfer("accumulator", "index_x")
@@ -97,10 +102,9 @@ class Sixty502:
         self.__transfer("index_y", "accumulator")
 
 
-
 proc = Sixty502()
 
 a = ByteInteger(255)
-b = ByteInteger(1)
-c = a + b
+b = ByteInteger(255)
+c = ByteInteger(add(a, b))
 print(c)
