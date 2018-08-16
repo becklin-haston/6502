@@ -106,6 +106,4 @@ class Sixty502:
 proc = Sixty502()
 
 a = ByteInteger(255)
-b = ByteInteger(255)
-c = ByteInteger(add(a, b))
-print(c)
+print(a)
