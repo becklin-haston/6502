@@ -50,6 +50,7 @@ class Sixty502:
 
         byte_int = ByteInteger(new_value)
         self.registers[register] = byte_int
+        # TODO write abstract flag setting method.
         self.flags["negative"] = True if byte_int.signed else False
         self.flags["zero"] = True if byte_int.value == 0 else False
 
