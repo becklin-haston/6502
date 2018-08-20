@@ -104,5 +104,12 @@ def multiply(first, second, bit_pattern = False):
             addend = times_2_n(first, i[1])
             new_bits = add(new_bits, addend, bit_pattern = True)
         
-    return new_bits
+    int_bits = [int(digit) for digit in new_bits]
+    
+    if bit_pattern:
+        return int_bits
+    else:
+        str_bits = [str(digit) if digit else "0" for digit in new_bits]
+        new_int = int("".join(str_bits), 2)
+        return new_int
 
