@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+
 def create_empty_byte():
     return [0] * 8
-=======
+
 """
 MANY FUNCTIONS-WHICH-HELP.
 """
