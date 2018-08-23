@@ -1,3 +1,5 @@
+def create_empty_byte():
+    return [0] * 8
 
 def add(first, second, bit_pattern=False):
 
@@ -43,3 +45,59 @@ def add(first, second, bit_pattern=False):
         return new_int
 
 
+def boolean_op(operation, **kwargs):
+
+    truth_tables = {
+        "AND": {
+            (1, 1): 1,
+            (1, 0): 0,
+            (0, 1): 0,
+            (0, 0): 0
+        },
+        "OR": {
+            (1, 1): 1,
+            (1, 0): 1,
+            (0, 1): 1,
+            (0, 0): 0
+        },
+        "NOT": {
+            1: 0,
+            0: 1
+        }
+    }
+
+    current_operation_truth_table = truth_tables[operation]
+    new_bits = create_empty_byte()
+
+    if operation != "NOT":
+        a = kwargs["a"]
+        b = kwargs["b"]
+        for i in range(8):
+            bit_a = a[i]
+            bit_b = b[i]
+            new_bits[i] = current_operation_truth_table[(bit_a, bit_b)]
+
+    else:
+        a = kwargs["a"]
+        for i in range(8):
+            bit = a[i]
+            new_bits[i] = current_operation_truth_table[bit]
+
+    return new_bits
+
+
+def AND(a, b):
+
+    return boolean_op("AND", a=a, b=b)
+
+
+def OR(a, b):
+
+    return boolean_op("OR", a=a, b=b)
+
+#
+# def XOR(a, b):
+#
+#     # (A and NOT B) or NOT A and B
+#
+#     not_b = NOT(b)
